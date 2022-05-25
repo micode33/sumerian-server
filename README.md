@@ -80,8 +80,10 @@ setup(){
 
   local SERVER_NAME=${1:-54.201.60.104}
   local PRIVATE_KEY=${2:-labsuser.pem}
+  local DEBUG="false"
+
   is_debug(){
-    if [ "$VERBOSE" != "false" ]; then
+    if [ "$DEBUG" != "false" ]; then
 
       return 1
 
@@ -90,16 +92,16 @@ setup(){
     return 0
   }
 
-  DEBUG || echo -e "rm -rf ~/.ssh/$PRIVATE_KEY"
+  is_debug || echo -e "rm -rf ~/.ssh/$PRIVATE_KEY"
   command rm -rf ~/.ssh/$PRIVATE_KEY
 
-  DEBUG || echo -e "rm -rf ~/.ssh/config"
+  is_debug || echo -e "rm -rf ~/.ssh/config"
   command rm -rf ~/.ssh/config
 
-  DEBUG || echo -e "chmod 400 ~/Downloads/$PRIVATE_KEY"
+  is_debug || echo -e "chmod 400 ~/Downloads/$PRIVATE_KEY"
   command chmod 400 ~/Downloads/$PRIVATE_KEY
 
-  DEBUG || echo -e "cp ~/Downloads/$PRIVATE_KEY ~/.ssh"
+  is_debug || echo -e "cp ~/Downloads/$PRIVATE_KEY ~/.ssh"
   command cp ~/Downloads/$PRIVATE_KEY ~/.ssh
 
   local ssh_config="
@@ -112,13 +114,15 @@ Host aws\n
 
   echo -e $ssh_config > ~/.ssh/config
 
-  DEBUG ||echo -e "scp sumerian-server.sh aws:~"
+  is_debug ||echo -e "scp sumerian-server.sh aws:~"
   command scp sumerian-server.sh aws:~
 
-  DEBUG ||echo -e "ssh aws"
+  is_debug ||echo -e "ssh aws"
   command ssh aws
 
-  DEBUG ||echo -e "bash sumerian-server.sh"
+  is_debug ||echo -e "bash sumerian-server.sh"
+
+  echo -e "Setup complete"
 
 }
 

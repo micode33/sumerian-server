@@ -21,5 +21,8 @@ cd sumerian-server
 # Disable httpd which is listening on port 80
 sudo systemctl stop httpd
 
+# Allow httpd to shutdown
+sleep 5
+
 # Run sumerian server on port 90
-python3 main.py -p 80
+sudo python3 main.py -p 80
