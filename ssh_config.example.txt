@@ -1,0 +1,5 @@
+Host aws 
+  Hostname 54.201.60.104
+  User ec2-user
+  Port 22
+  IdentityFile ~/.ssh/labsuser.pem
